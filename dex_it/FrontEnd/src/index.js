@@ -3,11 +3,29 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createConfig, WagmiConfig , configureChains } from 'wagmi'
+import {publicProvider} from 'wagmi/providers/public';
+import {mainnet} from '@Wagmi/core/chains'
+ const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+ const {chains , publicClient, webSocketPublicClient} = configureChains(
+  [mainnet],
+  [publicProvider()]
+  
+ );
+
+ const config = createConfig({
+  autoConnect: true,
+  publicClient,
+  webSocketPublicClient,
+ })
+
 root.render(
   <React.StrictMode>
-    <App />
+<WagmiConfig config ={config}>
+  <App />
+  </WagmiConfig>
+    
   </React.StrictMode>
 );
 
